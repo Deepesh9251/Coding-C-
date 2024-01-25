@@ -67,24 +67,32 @@ public:
         return;
     }
 
-    void insert(int val, int pos){ //* 0-based indexing
-        if(pos <= 0) {
-            if(pos==0) insertAtFirst(val);
-            else cout<<"Invalid Position"<<endl;
+    void insert(int val, int pos){ //* 0-based indexing and pos should be less than the length(i.e. valid position)
+
+        if(pos <= 0){
+            if(pos == 0) insertAtFirst(val);
+            else cout<<"Invalid Position: "<<pos<<endl;
             return;
         }
         Node* ptr = head;
-        bool isValidPosition = true;
+        bool flag = true;
+        int temp = pos;
         while(pos--){
-            if(ptr == NULL){
-                cout<<"Invalid position"<<endl;
-                return;
-            }
             ptr = ptr -> next;
+            if(ptr == NULL){
+                cout<<"Invalid Position: "<<temp<<endl;
+                flag = false;
+                // return;
+            }
         }
-        if(ptr->next == NULL){
+        if(flag){
+            Node* newNode = new Node(val);
+            newNode->next = ptr;
+            newNode->prev = ptr->prev;
+            ptr->prev->next = newNode;
+            ptr->prev = newNode;
+        }
 
-        }
         return;
     }
 
@@ -98,14 +106,15 @@ public:
 
 int main(){
     DoublyLinkedList dll;
-    dll.insertAtFirst(1);
-    dll.insert(69,20);
-    dll.insertAtLast(4);
-    dll.insert(453,2);
-    dll.insert(99,7);
-    int arr[] = {900,800,700};
+    int arr[] = {0,1,2,3,4,5,6,7};
     int size = sizeof(arr) / sizeof(int);
     dll.insertArray(arr, size);
+    dll.insert(10,-1);
+    dll.insert(20,0);
+    dll.insert(30,9);
+    dll.print();    
+    dll.insert(40,10);
+    dll.insert(50,9);
     dll.print();    
     return 0;
 }
