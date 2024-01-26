@@ -57,12 +57,30 @@ public:
     }
 };
 
+void reverseIterative(DoublyLinkedList &dll ){
+    if(dll.head == NULL || (dll.head)->next == NULL) return;
+    Node* ptr = dll.head;
+    while(ptr != NULL){
+        Node* temp = ptr->next;
+        ptr->next = ptr->prev;
+        ptr->prev = temp;
+        ptr = ptr->prev;
+    }
+    Node* temp = dll.head;
+    dll.head = dll.tail;
+    dll.tail = dll.head;
+    return;
+}
+
+
+
 int main(){
     DoublyLinkedList dll;
-    int arr[] = {0,1,2};
+    int arr[] = {};
     int size = sizeof(arr) / sizeof(int);
 
     dll.insertArray(arr,size);
+    reverseIterative(dll);
     dll.print();
     
     return 0; 
