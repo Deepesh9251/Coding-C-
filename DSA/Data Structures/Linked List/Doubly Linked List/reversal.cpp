@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+//* my first thought was to just swap head and tail pointer.🙂
 
 class Node{
 public:
@@ -21,6 +22,7 @@ public:
         head = NULL;
         tail = NULL;
     }
+
     void print(){
         if(head == NULL){
             cout<<"NULL"<<endl;
@@ -33,27 +35,35 @@ public:
             ptr = ptr->next;
         } cout<<ptr->data<<" -> NULL"<<endl;
     }
-    
+
+    void insertAtLast(int val){
+        if(tail == NULL){
+            head = new Node(val);
+            tail = head;
+            return;
+        }
+        Node* newNode = new Node(val);
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = newNode;
+        return;
+    }
+
+    void insertArray(int* arr, int size){
+        for(int i = 0; i < size; i++){
+            insertAtLast(arr[i]);
+        }
+        return;
+    }
 };
 
 int main(){
-    Node* node1 = new Node(45);
-    Node* node2 = new Node(57);
-    Node* node3 = new Node(89);
-    Node* node4 = new Node(24);
-    node1->next = node2;
-    node2->prev = node1;
-    node2->next = node3;
-    node3->prev = node2;
-    node3->next = node4;
-    node4->prev = node3;
-
     DoublyLinkedList dll;
-    dll.head = node1;
-    dll.tail = node4;
-    
-    dll.print();
+    int arr[] = {0,1,2};
+    int size = sizeof(arr) / sizeof(int);
 
+    dll.insertArray(arr,size);
+    dll.print();
     
-    return 0;
+    return 0; 
 }

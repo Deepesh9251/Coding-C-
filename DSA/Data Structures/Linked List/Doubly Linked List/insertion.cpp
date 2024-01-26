@@ -33,6 +33,10 @@ public:
         }
     }
     void print(){
+        if(head == NULL){
+            cout<<"NULL"<<endl;
+            return;
+        }
         Node* ptr = head;
         cout<<"NULL <- "; 
         while(ptr->next != NULL){
@@ -113,8 +117,9 @@ int main(){
     dll.insert(20,0);
     dll.insert(30,9);
     dll.print();    
-    dll.insert(40,10);
+    dll.insert(40,9);
     dll.insert(50,9);
     dll.print();    
+    cout<<dll.tail->data;
     return 0;
 }
