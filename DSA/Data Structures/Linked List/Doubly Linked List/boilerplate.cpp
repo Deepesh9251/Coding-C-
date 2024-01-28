@@ -1,6 +1,4 @@
-#include<iostream>
-#include<limits.h>
-#include<vector>
+#include <iostream>
 using namespace std;
 
 class Node{
@@ -60,60 +58,12 @@ class DoublyLinkedList{
     }
 };
 
-bool isCritical(Node* &ptr){
-    if(ptr == NULL || ptr->next == NULL || ptr->prev == NULL){
-        return false;
-    }
-    int curr = ptr->data;
-    int prev = ptr->prev->data;
-    int nxt = ptr->next->data;
-    if((curr < prev && curr < nxt) || (curr > prev && curr > nxt)){
-        return true;
-    }
-    return false;
-}
-
-vector<int> minimaMaximaMinMaxDistance(DoublyLinkedList &dll){
-    if(dll.head == NULL || dll.head->next == NULL){
-        vector<int> ans = {-1,-1};
-        return ans;
-    }
-    Node* ptr = dll.head->next;
-    int idx = 1;
-    int prev = 0;
-    int first = 0;
-    int minDistance = INT_MAX;
-
-    while(ptr->next != NULL){
-        if(isCritical(ptr)){
-            if(!first) first = idx;
-            if(prev) minDistance = min(minDistance, idx - prev);
-            prev = idx;
-        }
-        ptr = ptr->next;
-        idx++;
-    }
-    int maxDistance = prev - first;
-    if(maxDistance == 0 || minDistance == INT_MAX){
-        minDistance = maxDistance = -1;
-    }
-    vector<int> ans = {minDistance, maxDistance};
-    return ans;
-}
-
-
-
 int main(){
-
     DoublyLinkedList dll;
     int arr[] = {};
     int size = sizeof(arr) / sizeof(int);
 
     dll.insertArray(arr, size);
     dll.print();
-    vector<int> v = minimaMaximaMinMaxDistance(dll);
-    cout<<v[0]<<" "<<v[1]<<endl;
-    
-
     return 0;
 }

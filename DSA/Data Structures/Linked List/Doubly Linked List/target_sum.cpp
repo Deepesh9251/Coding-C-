@@ -1,6 +1,5 @@
-#include<iostream>
-#include<limits.h>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 class Node{
@@ -60,60 +59,35 @@ class DoublyLinkedList{
     }
 };
 
-bool isCritical(Node* &ptr){
-    if(ptr == NULL || ptr->next == NULL || ptr->prev == NULL){
-        return false;
-    }
-    int curr = ptr->data;
-    int prev = ptr->prev->data;
-    int nxt = ptr->next->data;
-    if((curr < prev && curr < nxt) || (curr > prev && curr > nxt)){
-        return true;
-    }
-    return false;
-}
-
-vector<int> minimaMaximaMinMaxDistance(DoublyLinkedList &dll){
-    if(dll.head == NULL || dll.head->next == NULL){
-        vector<int> ans = {-1,-1};
-        return ans;
-    }
-    Node* ptr = dll.head->next;
-    int idx = 1;
-    int prev = 0;
-    int first = 0;
-    int minDistance = INT_MAX;
-
-    while(ptr->next != NULL){
-        if(isCritical(ptr)){
-            if(!first) first = idx;
-            if(prev) minDistance = min(minDistance, idx - prev);
-            prev = idx;
+vector<int> targetSum(DoublyLinkedList &dll, int x){
+    Node* ptr1 = dll.head;
+    Node* ptr2 = dll.tail;
+    
+    while(ptr1 != ptr2){
+        int a = ptr1->data;
+        int b = ptr2->data;
+        if(a + b == x){
+            return {a,b};
+        }else if(a + b > x){
+            ptr2 = ptr2->prev;
+        }else{
+            ptr1 = ptr1->next;
         }
-        ptr = ptr->next;
-        idx++;
     }
-    int maxDistance = prev - first;
-    if(maxDistance == 0 || minDistance == INT_MAX){
-        minDistance = maxDistance = -1;
-    }
-    vector<int> ans = {minDistance, maxDistance};
-    return ans;
+
+    return {-1,-1};
+
 }
-
-
 
 int main(){
-
     DoublyLinkedList dll;
     int arr[] = {};
     int size = sizeof(arr) / sizeof(int);
 
     dll.insertArray(arr, size);
     dll.print();
-    vector<int> v = minimaMaximaMinMaxDistance(dll);
-    cout<<v[0]<<" "<<v[1]<<endl;
-    
+    vector<int> ans = targetSum(dll,12 );
+    cout<<ans[0]<<" "<<ans[1];
 
     return 0;
 }
