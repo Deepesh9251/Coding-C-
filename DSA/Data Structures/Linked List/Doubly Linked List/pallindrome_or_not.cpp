@@ -1,21 +1,21 @@
 #include<iostream>
 using namespace std;
-//* my first thought was to just swap head and tail pointer.🙂
 
 class Node{
-public:
+    public:
     int data;
-    Node* prev;
     Node* next;
-    Node(int data){
-        this->data = data;
-        prev = NULL;
+    Node* prev;
+    Node(int val){
+        data = val;
         next = NULL;
+        prev = NULL;
     }
+
 };
 
 class DoublyLinkedList{
-public:
+    public:
     Node* head;
     Node* tail;
     DoublyLinkedList(){
@@ -57,34 +57,25 @@ public:
     }
 };
 
-void reverseIterative(DoublyLinkedList &dll ){
-    if(dll.head == NULL || (dll.head)->next == NULL) return;
-    Node* ptr = dll.head;
-    while(ptr != NULL){
-        Node* temp = ptr->next;
-        ptr->next = ptr->prev;
-        ptr->prev = temp;
-        ptr = ptr->prev;
+bool isPallindrome(DoublyLinkedList &dll ){
+    if(dll.head == NULL) cout<<"Empty List"<<endl;
+    Node* head = dll.head;
+    Node* tail = dll.tail;
+    while(head!=tail && head != tail->next){
+        if(head->data != tail->data) return false;
+        head = head->next;
+        tail = tail->prev;
     }
-    Node* temp = dll.head;
-    dll.head = dll.tail;
-    dll.tail = dll.head;
-    return;
-}
-
-Node* reverseRecursive(Node* head, Node* tail ){
-    return head;
+    return true;
 }
 
 int main(){
     DoublyLinkedList dll;
-    int arr[] = {1,2,3,4,5,6};
+    int arr[] = {};
     int size = sizeof(arr) / sizeof(int);
 
     dll.insertArray(arr,size);
-    reverseIterative(dll);
-    // dll.head = reverseRecursive(dll.head, dll.tail);
-    dll.print();
-    
-    return 0; 
+    cout<<(isPallindrome(dll) ? "YES" : "NO");
+    // dll.print();
+    return 0;
 }

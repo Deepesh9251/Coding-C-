@@ -1,21 +1,22 @@
 #include<iostream>
 using namespace std;
-//* my first thought was to just swap head and tail pointer.🙂
 
 class Node{
-public:
+    public:
     int data;
-    Node* prev;
     Node* next;
-    Node(int data){
-        this->data = data;
-        prev = NULL;
+    Node* prev;
+    Node(int val){
+        data = val;
         next = NULL;
+        prev = NULL;
     }
+
 };
 
+
 class DoublyLinkedList{
-public:
+    public:
     Node* head;
     Node* tail;
     DoublyLinkedList(){
@@ -57,34 +58,34 @@ public:
     }
 };
 
-void reverseIterative(DoublyLinkedList &dll ){
-    if(dll.head == NULL || (dll.head)->next == NULL) return;
-    Node* ptr = dll.head;
-    while(ptr != NULL){
-        Node* temp = ptr->next;
-        ptr->next = ptr->prev;
-        ptr->prev = temp;
-        ptr = ptr->prev;
+void deleteWhenEqualNeighbour(DoublyLinkedList &dll ){
+    Node* head = dll.head;
+    Node* tail = dll.tail;
+    if(head == NULL || head == tail){
+        return;
     }
-    Node* temp = dll.head;
-    dll.head = dll.tail;
-    dll.tail = dll.head;
+    Node* ptr = tail->prev;
+    while(ptr->prev != NULL){
+        if(ptr->prev->data == ptr->next->data){
+            Node* temp = ptr;
+            temp->next->prev = temp->prev;
+            temp->prev->next = temp->next;
+            delete(temp);
+        }else{
+            ptr = ptr->prev;
+        }
+    }
     return;
-}
-
-Node* reverseRecursive(Node* head, Node* tail ){
-    return head;
 }
 
 int main(){
     DoublyLinkedList dll;
-    int arr[] = {1,2,3,4,5,6};
+    int arr[] = {1,1,1};
     int size = sizeof(arr) / sizeof(int);
 
     dll.insertArray(arr,size);
-    reverseIterative(dll);
-    // dll.head = reverseRecursive(dll.head, dll.tail);
     dll.print();
-    
-    return 0; 
+    deleteWhenEqualNeighbour(dll);
+    dll.print();
+    return 0;
 }
