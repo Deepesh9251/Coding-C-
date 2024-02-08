@@ -77,8 +77,7 @@ void add(LinkedList &l1, LinkedList &l2){
         if(ptr1 != NULL) ptr1 = ptr1->next;
         if(ptr2 != NULL) ptr2 = ptr2->next;
     }
-    cout<<"At last carry = "<<carry<<endl;
-    // if(carry) l1.insertAtLast(carry);
+    if(carry) l1.insertAtLast(carry);
     return;
 }
 
