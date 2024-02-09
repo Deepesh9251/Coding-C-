@@ -26,13 +26,12 @@ int main(){
     //*_ Now these iterators are pointing to the nodes but the nodes are not connected to list, so we cant use them for the list traversal without again pointing them to the list nodes.
     list<int> l2 = {1,2,3,4,5,6,7,8};
     printList(l2);
-    list<int> :: reverse_iterator itr7 = l2.rbegin();
-    advance(itr7, 3);
-    list<int> :: reverse_iterator itr69 = l2.rbegin();
-    advance(itr69, 5);
+    list<int> :: iterator itr7 = l2.begin();
+    advance(itr7, 5);
+    list<int> :: iterator itr69 = l2.begin();
+    advance(itr69, 3);
     l2.erase(itr69, itr7);
     printList(l2);
 
-    
     return 0;
 }
