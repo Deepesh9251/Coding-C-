@@ -1,3 +1,6 @@
+//Q. Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null. e.g 1->2->3->4->5->6->7->8->9->10->4(repeat)->5->6->7->8->9->10->4(repeat). returm ptr which point to 4.
+
+
 #include <iostream>
 using namespace std;
 
@@ -53,8 +56,27 @@ public:
         }
         return count;
     }
-
 };
+
+Node* isCyclic(LinkedList &l){
+    Node* head = l.head;
+    Node* fast = l.head;
+    Node* slow = l.head;
+    while(fast != NULL && fast->next != NULL){
+        fast = fast->next->next;
+        slow = slow->next;
+        if(fast == slow){
+            slow = head;
+            while(fast != slow){
+                fast = fast->next;
+                slow = slow->next;
+            }
+            return fast;
+        }
+    }
+    return NULL;
+
+}
 
 int main(){
     LinkedList ll;
@@ -62,8 +84,19 @@ int main(){
     int size = sizeof(arr) / sizeof(int);
 
     ll.insertArray(arr,size);
+    Node* tail = ll.head;
+    while(tail->next != NULL){
+        tail = tail->next;
+    }
+    Node* ptr = ll.head;
+    while(ptr->data != 9){
+        ptr = ptr->next;
+    }
+    tail->next = NULL;
 
-    ll.print();
+    ptr = isCyclic(ll);
+    cout<<(ptr ? ptr->data : "NULL");
+    // ll.print();
 
     return 0;
 }

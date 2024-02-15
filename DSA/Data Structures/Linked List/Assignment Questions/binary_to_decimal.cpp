@@ -1,4 +1,5 @@
 #include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node{
@@ -44,25 +45,24 @@ public:
         } cout<<"NULL"<<endl;
     }
 
-    int size(){
-        int count = 0;
-        Node* ptr = head;
-        while(ptr != NULL){
-            count++;
-            ptr = ptr->next;
-        }
-        return count;
-    }
-
 };
+
+int binaryToDecimal(Node* &head, int &mul){
+    if(head == NULL) return 0;
+    if(head->next == NULL) return head->data;
+    int val = binaryToDecimal(head->next, mul);
+    mul = mul*2;
+    return val + mul*head->data;
+}
 
 int main(){
     LinkedList ll;
-    int arr[] = {1,2,3,4,5,6,7,8,9};
+    int arr[] = {};
     int size = sizeof(arr) / sizeof(int);
 
     ll.insertArray(arr,size);
-
+    int mul = 1;
+    cout<<binaryToDecimal(ll.head, mul)<<endl;
     ll.print();
 
     return 0;
