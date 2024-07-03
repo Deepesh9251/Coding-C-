@@ -25,7 +25,7 @@ int main()
         for(int j = i; j < n - 1 - i; j++){         // for each cycle rotation
 
             swap(&arr[i][j], &arr[n-1-j][i]);          // swapping top-most row and left-most column
-            swap(&arr[n-1-j][i], &arr[n-1-i][n-1-j]);  // swapping left most column and bottom most rwo
+            swap(&arr[n-1-j][i], &arr[n-1-i][n-1-j]);  // swapping left most column and bottom most row
             swap(&arr[j][n-1-i], &arr[n-1-i][n-1-j]);  // swapping bottom most row and right most column
 
         //*Another approach of swapping with less number of operations
